@@ -1,0 +1,32 @@
+<div class="container-fluid">
+  <div>
+    <h2>Products</h2>
+  </div>
+  <div>
+    @defer {
+      @if (authService.hasAnyRole(['ROLE_SUPER_ADMIN'])) {
+      <div class="d-flex justify-content-end pb-2">
+        <button type="button" class="btn btn-primary d-flex align-items-center" (click)="formModal.show()">
+          <i class="fa-solid fa-plus white"></i>
+          <p class="mb-0">Add product</p>
+        </button>
+      </div>
+      }
+      <div>
+        <app-product-list
+        [itemList]="productService.items$()"
+        [areActionsAvailable]="areActionsAvailable"
+        />
+      </div>
+    } @loading (after 100ms; minimum 1s) {
+      <app-loader/>
+    }
+  </div>
+</div>
+  
+<app-modal size="lg" #formModal>
+    <app-product-form 
+    (callParentEvent)="onFormEventCalled($event)"
+    [title]="'Add Product'"
+    ></app-product-form>
+</app-modal>

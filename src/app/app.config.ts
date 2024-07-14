@@ -6,7 +6,6 @@ import { provideClientHydration } from '@angular/platform-browser';
 import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { baseUrlInterceptor } from './interceptors/base-url.interceptor';
 import { accessTokenInterceptor } from './interceptors/access-token.interceptor';
-import { handleErrorsInterceptor } from './interceptors/handle-errors.interceptor';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 
 export const appConfig: ApplicationConfig = {
@@ -17,7 +16,6 @@ export const appConfig: ApplicationConfig = {
       withInterceptors([
         baseUrlInterceptor,
         accessTokenInterceptor,
-        //handleErrorsInterceptor
       ])
     ), provideAnimationsAsync()
   ]

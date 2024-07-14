@@ -25,7 +25,6 @@ export class UserListComponent {
   public search: String = '';
   public userList: IUser[] = [];
   private service = inject(UserService);
-  private snackBar = inject(MatSnackBar);
   public currentUser: IUser = {
     email: '',
     lastname: '',
@@ -40,28 +39,5 @@ export class UserListComponent {
     });
   }
 
-  showDetail(user: IUser, modal: any) {
-    this.currentUser = {...user}; 
-    modal.show();
-  }
-
-  deleteUser(user: IUser) {
-    this.service.deleteUserSignal(user).subscribe({
-      next: () => {
-        this.snackBar.open('User deleted', 'Close', {
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          duration: 5 * 1000,
-        });
-      },
-      error: (error: any) => {
-        this.snackBar.open('Error deleting user', 'Close', {
-          horizontalPosition: 'right',
-          verticalPosition: 'top',
-          panelClass: ['error-snackbar']
-        });
-      }
-    })
-  }
 
 }

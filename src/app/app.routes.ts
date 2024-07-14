@@ -6,9 +6,11 @@ import { UsersComponent } from './pages/users/users.component';
 import { AuthGuard } from './guards/auth.guard';
 import { AccessDeniedComponent } from './pages/access-denied/access-denied.component';
 import { AdminRoleGuard } from './guards/admin-role.guard';
-import { DashboardComponent } from './pages/dashboard/dashboard.component';
 import { GuestGuard } from './guards/guest.guard';
-import { IRole } from './interfaces';
+import { IRoleType } from './interfaces';
+import { ProfileComponent } from './pages/profile/profile.component';
+import { ProductComponent } from './pages/product/product.component';
+import { CategoryComponent } from './pages/category/category.component';
 
 export const routes: Routes = [
   {
@@ -46,22 +48,50 @@ export const routes: Routes = [
         canActivate:[AdminRoleGuard],
         data: { 
           authorities: [
-            IRole.admin, 
-            IRole.superAdmin
+            IRoleType.admin, 
+            IRoleType.superAdmin
           ],
-          name: 'Users'
+          name: 'Users',
+          showInSidebar: true
         }
       },
       {
-        path: 'dashboard',
-        component: DashboardComponent,
+        path: 'profile',
+        component: ProfileComponent,
         data: { 
           authorities: [
-            IRole.admin, 
-            IRole.superAdmin,
-            IRole.user
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
           ],
-          name: 'Dashboard'
+          name: 'Profile',
+          showInSidebar: false
+        }
+      },
+      {
+        path: 'categories',
+        component: CategoryComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          name: 'Categories',
+          showInSidebar: true
+        }
+      },
+      {
+        path: 'products',
+        component: ProductComponent,
+        data: { 
+          authorities: [
+            IRoleType.admin, 
+            IRoleType.superAdmin,
+            IRoleType.user
+          ],
+          name: 'Products',
+          showInSidebar: true
         }
       }
     ],

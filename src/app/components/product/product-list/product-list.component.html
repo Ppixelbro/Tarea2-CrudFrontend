@@ -1,0 +1,56 @@
+<div class="table-responsive">
+  <table class="table">
+    <thead>
+      <tr>
+        @if (authService.hasAnyRole(['ROLE_SUPER_ADMIN'])) {
+        <th scope="col">#</th>
+        }
+        <th scope="col">Name</th>
+        <th scope="col">Description</th>
+        <th scope="col">Price</th>
+        @if (authService.hasAnyRole(['ROLE_SUPER_ADMIN'])) {
+        <th scope="col">Stock</th>
+        }
+        <th scope="col">Category</th>
+        @if (authService.hasAnyRole(['ROLE_SUPER_ADMIN'])) {
+        <th scope="col">Created At</th>
+        <th scope="col">Updated At</th>
+        <th scope="col">Actions</th>
+        }
+      </tr>
+    </thead>
+    <tbody>
+      @for (item of itemList; track $index) {
+      <tr>
+        @if (authService.hasAnyRole(['ROLE_SUPER_ADMIN'])) {
+        <th scope="row">{{item.id}}</th>
+        }
+        <td>{{item.name}}</td>
+        <td>{{item.description}}</td>
+        <td>{{item.price}}</td>
+        @if (authService.hasAnyRole(['ROLE_SUPER_ADMIN'])) {
+        <td>{{item.stockQuantity}}</td>
+        }
+        <td>{{item.category?.name}}</td>
+        @if (authService.hasAnyRole(['ROLE_SUPER_ADMIN'])) {
+        <td>{{item.createdAt | date}}</td>
+        <td>{{item.updatedAt | date}}</td>
+        <td>
+          <button type="button" (click)="showDetailModal(item, detailModal)" class="btn btn-secondary">
+            <i class="fa-solid fa-eye white"></i>
+          </button>
+          <button type="button" (click)="deleteProduct(item)" class="btn btn-danger">
+            <i class="fa-solid fa-trash white"></i>
+          </button>
+        </td>
+        }
+      </tr>
+      }
+    </tbody>
+  </table>
+</div>
+
+<app-modal #detailModal>
+  <app-product-form (callParentEvent)="onFormEventCalled($event)" [title]="'Update Product'"
+    [toUpdateProduct]="selectedItem" />
+</app-modal>
